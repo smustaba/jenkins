@@ -1,0 +1,21 @@
+node {
+stage ('checkout') {
+git 'https://github.com/smustaba/maven.git'
+}
+stage ('build') {
+sh 'mvn package'
+}
+
+stage ('deploy to test') {
+sh 'scp /var/lib/jenkins/workspace/scripted-pipeline/webapp/target/webapp.war syed@192.168.52.135:/var/lib/tomcat10/webapps/testapp.war'
+}
+
+stage ('testing') {
+git 'https://github.com/smustaba/FunctionalTesting.git'
+sh 'java -jar /var/lib/jenkins/workspace/scripted-pipeline/testing.jar'
+}
+
+stage ('deploy to prod') {
+sh 'scp /var/lib/jenkins/workspace/declarative-pipeline/webapp/target/webapp.war syed@192.168.52.132:/var/lib/tomcat10/webapps/prodapp.war'
+}
+}
