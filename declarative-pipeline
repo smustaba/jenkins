@@ -36,7 +36,3 @@ sh 'scp /var/lib/jenkins/workspace/declarative-pipeline/webapp/target/webapp.war
 
 }
 }
-}
-
-
-
